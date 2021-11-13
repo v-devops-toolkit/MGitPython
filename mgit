@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+
+import fire
+import subprocess
+import yaml
+import pprint
+from jinja2 import Environment, BaseLoader
+
+class MultiGit(object):
+    """
+    MultiGit - processor for multiple git repos
+    """
+
+    def __init__(self):
+      self.__load_config_file__("mgit.yaml")
+
+    def __load_config_file__(self, filename):
+        with open(filename, "r") as stream:
+            self.__config = yaml.safe_load(stream)
+        if (self.__config.get('dir') != 'None'):
+            self.__config['dir'] = self.__config['dir'].rstrip('/') + '/'
+        for item in self.__config['repos']:
+            if (item.get('dir') == None):
+                item['dir'] = self.__config['dir']
+            if (item.get('url') == None):
+                rtemplate = Environment(loader=BaseLoader).from_string(self.__config['baseUrl'])
+                item['url'] = rtemplate.render(item)
+            if (item.get('tags') == None):
+                item['tags'] = []
+            if (not 'all' in item['tags']):
+                item['tags'].append('all')
+
+    def __run_commands__(self, commands, tag: str = 'all'):
+        for item in self.__config['repos']:
+            if (tag in item['tags']):
+                print("========================================")
+                print(f"REPO: {item['name']}")
+                for command in commands:
+                    process = subprocess.run(command, cwd=f"{item['dir']}{item['name']}")
+
+    def debug(self):
+        """
+        debug command
+        """
+        pprint.pprint(self.__config)
+
+    def status(self, params: str = '-sb', tag: str = 'all'):
+        """
+        git status command
+        :param params: command parameters
+        :param tag: tag to filter repos
+        """
+        self.__run_commands__([
+            ["git", "status", params]
+        ], tag)
+
+    def describe(self, params: str = '--tags', tag: str = 'all'):
+        """
+        git describe command
+        :param params: command parameters
+        :param tag: tag to filter repos
+        """
+        self.__run_commands__([
+            ["git", "describe", params]
+        ], tag)
+
+    def checkout(self, params: str = 'master', tag: str = 'all'):
+        """
+        git checkout command
+        :param params: command parameters
+        :param tag: tag to filter repos
+        """
+        self.__run_commands__([
+            ["git", "checkout", params]
+        ], tag)
+
+    def git(self, params: str = '', tag: str = 'all'):
+        """
+        generic git command
+        :param params: command parameters
+        :param tag: tag to filter repos
+        """
+        parts = params.split(' ')
+        parts.insert(0, 'git')
+        self.__run_commands__([
+            parts
+        ], tag)
+
+    def info(self, tag: str = 'all'):
+        """
+        git status, git describe commands
+        :param tag: tag to filter repos
+        """
+        self.__run_commands__([
+            ["git", "status", "-sb"],
+            ["git", "rev-parse", "--short=8", "HEAD"],
+            ["git", "describe", "--tags"],
+        ], tag)
+
+    def update(self, tag: str = 'all'):
+        """
+        git update command
+        :param tag: tag to filter repos
+        """
+        self.__run_commands__([
+            ["git", "fetch"],
+            ["git", "reset", "--hard"],
+            ["git", "clean", "-df"],
+            ["git", "rebase",],
+        ], tag)
+
+    def cleanup(self, tag: str = 'all'):
+        """
+        git cleanup command
+        :param tag: tag to filter repos
+        """
+        self.__run_commands__([
+            ["git", "fetch", "--prune"],
+            ["git", "reflog", "expire", "--all", "--expire=now"],
+            ["git", "prune"],
+            ["git", "fsck", "--unreachable"],
+            ["git", "gc"],
+        ], tag)
+
+    def clone(self, tag: str = 'all'):
+        """
+        git clone command
+        :param tag: tag to filter repos
+        """
+        for item in self.__config['repos']:
+            if (tag in item['tags']):
+                print("========================================")
+                print(f"REPO: {item['name']}")
+                process = subprocess.run(["git", "clone", f"{item['url']}"], cwd=f"{item['dir']}")
+
+
+def main():
+    fire.Fire(MultiGit)
+
+if __name__ == '__main__':
+    main()

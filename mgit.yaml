@@ -1,0 +1,16 @@
+dir: "../../tmp"
+baseUrl: git@github.com:PragmaticGuideToTheCloud/{{name}}.git
+
+repos:
+
+  - name: mgit
+    # will get url: git@github.com:PragmaticGuideToTheCloud/mgit.git
+    # will get dir: "../../tmp/"
+    tags:
+      - product
+
+  - name: gitignore
+    url: git@github.com:github/gitignore.git
+    # will get dir: "../../tmp/"
+    tags:
+      - two
