@@ -65,6 +65,12 @@ class MultiGit(object):
         """
         pprint.pprint(self.__config)
 
+    def version(self):
+        """
+        version command
+        """
+        print('mgit ver. 0.3.0')
+
     def status(self, params: str = '-sb', tag: str = 'all'):
         """
         git status command
