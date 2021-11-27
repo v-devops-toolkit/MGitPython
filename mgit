@@ -66,11 +66,24 @@ class MultiGit(object):
         """
         pprint.pprint(self.__config)
 
+    def dump_config(self, filename: str = 'mgit.yaml'):
+        """
+        dump_config command
+        """
+        self._save_config_as_yaml(os.path.join(self.__dir, filename))
+
+    def _get_config_yaml(self):
+        return yaml.dump(self.__config)
+
+    def _save_config_as_yaml(self, filename):
+        with open(filename, "w") as text_file:
+            text_file.write(self._get_config_yaml())
+
     def version(self):
         """
         version command
         """
-        print('mgit ver. 0.3.0')
+        print('mgit ver. 0.4.0')
 
     def status(self, params: str = '-sb', tag: str = 'all'):
         """
