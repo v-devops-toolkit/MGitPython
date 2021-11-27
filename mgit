@@ -50,6 +50,7 @@ class MultiGit(object):
                 item['dir'] = self.__dir
                 item['tags'] = ['all']
                 self.__config['repos'].append(item)
+        self.__config['repos'] = sorted(self.__config['repos'], key=lambda x: x['name'])
 
     def __run_commands__(self, commands, tag: str = 'all'):
         for item in self.__config['repos']:
