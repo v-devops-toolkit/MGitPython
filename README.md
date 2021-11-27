@@ -24,13 +24,13 @@ repositories that you want to work with, for example:
     # mgit.yaml
     dir: "../../tmp"
     baseUrl: git@github.com:PragmaticGuideToTheCloud/{{name}}.git
-    
+
     repos:
-    
+
       - name: mgit
         tags:
           - product
-    
+
       - name: gitignore
         url: git@github.com:github/gitignore.git
         tags:
@@ -64,3 +64,7 @@ Run generic git command or git alias:
 
     # l is an alias to git log --oneline
     mgit git "l -1"
+
+## Unit tests
+
+    pytest test*.py

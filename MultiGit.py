@@ -23,10 +23,24 @@ class MultiGit(object):
         else:
             self.__generate_config()
 
-    def __load_config_file__(self, filename):
+    def __set_config__(self, config):
+        self.__config = config
+
+    def __get_config__(self):
+        return self.__config
+
+    def __load_raw_config_file__(self, filename):
         with open(filename, "r") as stream:
-            self.__config = yaml.safe_load(stream)
-        if (self.__config.get('dir') != 'None'):
+            self.__set_config__(yaml.safe_load(stream))
+
+    def __process_raw_config_file__(self):
+        if (not self.__config.get('repos')):
+            self.__config['repos'] = []
+        if (not self.__config.get('baseUrl')):
+            self.__config['baseUrl'] = ''
+        if (not self.__config.get('dir')):
+            self.__config['dir'] = ''
+        if (self.__config['dir'] != ''):
             self.__config['dir'] = self.__config['dir'].rstrip('/') + '/'
         for item in self.__config['repos']:
             if (item.get('dir') == None):
@@ -38,6 +52,10 @@ class MultiGit(object):
                 item['tags'] = []
             if (not 'all' in item['tags']):
                 item['tags'].append('all')
+
+    def __load_config_file__(self, filename):
+        self.__load_raw_config_file__(filename)
+        self.__process_raw_config_file__()
 
     def __generate_config(self):
         self.__config['repos'] = []
@@ -51,6 +69,7 @@ class MultiGit(object):
                 item['tags'] = ['all']
                 self.__config['repos'].append(item)
         self.__config['repos'] = sorted(self.__config['repos'], key=lambda x: x['name'])
+        self.__process_raw_config_file__()
 
     def __run_commands__(self, commands, tag: str = 'all'):
         for item in self.__config['repos']:
