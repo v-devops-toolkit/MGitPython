@@ -5,14 +5,23 @@ import subprocess
 import yaml
 import pprint
 from jinja2 import Environment, BaseLoader
+import os
+import sys
 
 class MultiGit(object):
     """
     MultiGit - processor for multiple git repos
     """
 
-    def __init__(self):
-      self.__load_config_file__("mgit.yaml")
+    def __init__(self, dir: str = '.'):
+        self.__dir = dir
+        self.__config = {}
+        self.__config['repos'] = []
+        filename = os.path.join(dir, "mgit.yaml")
+        if (os.path.isfile(filename)):
+            self.__load_config_file__(filename)
+        else:
+            self.__generate_config()
 
     def __load_config_file__(self, filename):
         with open(filename, "r") as stream:
@@ -30,13 +39,25 @@ class MultiGit(object):
             if (not 'all' in item['tags']):
                 item['tags'].append('all')
 
+    def __generate_config(self):
+        self.__config['repos'] = []
+        for file in os.listdir(self.__dir):
+            current = os.path.join(self.__dir, file)
+            current_dot_git = os.path.join(current, '.git')
+            if (os.path.isdir(current) and os.path.isdir(current_dot_git)):
+                item = {}
+                item['name'] = file
+                item['dir'] = self.__dir
+                item['tags'] = ['all']
+                self.__config['repos'].append(item)
+
     def __run_commands__(self, commands, tag: str = 'all'):
         for item in self.__config['repos']:
             if (tag in item['tags']):
                 print("========================================")
                 print(f"REPO: {item['name']}")
                 for command in commands:
-                    process = subprocess.run(command, cwd=f"{item['dir']}{item['name']}")
+                    process = subprocess.run(command, cwd=os.path.join(item['dir'], item['name']))
 
     def debug(self):
         """
@@ -132,7 +153,6 @@ class MultiGit(object):
                 print("========================================")
                 print(f"REPO: {item['name']}")
                 process = subprocess.run(["git", "clone", f"{item['url']}"], cwd=f"{item['dir']}")
-
 
 def main():
     fire.Fire(MultiGit)
