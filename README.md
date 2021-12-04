@@ -14,7 +14,16 @@ Install dependencies:
 
     pip3 install -r requirements.txt
 
-and copy `mgit` script to some location which is included in your path.
+clone the repo
+
+    git clone git@github.com:gajdaw/mgit-python.git
+
+and create link to `main.py` file:
+
+    cd ~/bin
+    ln -s /Users/gajdaw/github/gajdaw/mgit-python/main.py mgit
+
+I assume that `~/bin` directory is included in your `PATH`.
 
 ## Configure
 
