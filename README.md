@@ -27,7 +27,15 @@ I assume that `~/bin` directory is included in your `PATH`.
 
 ## Configure
 
-Create the file named `mgit.yaml` and fill it with information about
+Configuration is optional.
+`mgit` can work with multiple git repositories cloned to one directory without any configuration file.
+
+Remember, that without configuration file:
+- you cannot clone repos using `mgit` (you must clone repos with `git clone` commands)
+- you cannot use tags
+
+If you want to use configration file then
+create the file named `mgit.yaml` and fill it with information about
 repositories that you want to work with, for example:
 
     # mgit.yaml
@@ -61,15 +69,19 @@ Print help:
 
     mgit
 
-Check status:
+Check configuration:
+
+    mgit debug
+
+Check status of all repositories:
 
     mgit status
 
-Change branches:
+Change branches in all repositories:
 
     mgit checkout master
 
-Run generic git command or git alias:
+Run generic git command or git alias in all repositories:
 
     # l is an alias to git log --oneline
     mgit git "l -1"
