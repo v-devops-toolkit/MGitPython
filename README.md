@@ -21,7 +21,7 @@ clone the repo
 and create link to `main.py` file:
 
     cd ~/bin
-    ln -s /Users/gajdaw/github/gajdaw/mgit-python/main.py mgit
+    ln -s /path/to/the/repo/mgit-python/main.py mgit
 
 I assume that `~/bin` directory is included in your `PATH`.
 
