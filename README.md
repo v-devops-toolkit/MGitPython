@@ -10,15 +10,15 @@ then all you need to run is
 
 ## Install
 
+Clone the repo:
+
+    git clone git@github.com:gajdaw/mgit-python.git
+
 Install dependencies:
 
     pip3 install -r requirements.txt
 
-clone the repo
-
-    git clone git@github.com:gajdaw/mgit-python.git
-
-and create link to `main.py` file:
+Create symbolic link to `main.py` file:
 
     cd ~/bin
     ln -s /path/to/the/repo/mgit-python/main.py mgit
