@@ -20,7 +20,8 @@ class MultiGit(object):
                 print("========================================")
                 print(f"REPO: {item['name']}")
                 for command in commands:
-                    process = subprocess.run(command, cwd=os.path.join(item['dir'], item['name']))
+                    process = subprocess.run(command, cwd=os.path.join(item['dir'], item['name']), capture_output=True)
+                    print(process.stdout.decode())
 
     def debug(self):
         """
