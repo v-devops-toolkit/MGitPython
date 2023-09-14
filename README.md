@@ -108,4 +108,4 @@ Run generic git command or git alias in all repositories:
 
 ## Unit tests
 
-    pytest test*.py
+    pytest mgitpy-test/test*.py
