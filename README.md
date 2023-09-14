@@ -8,6 +8,13 @@ then all you need to run is
 
     mgit checkout abc
 
+## Build
+
+    rm -rf *
+    git reset --hard
+    python3 -m build
+    pip3 install dist/MGitPython-0.7.0.tar.gz
+
 ## Install
 
 Clone the repo:
@@ -21,7 +28,11 @@ Install dependencies:
 Create symbolic link to `main.py` file:
 
     cd ~/bin
-    ln -s /path/to/the/repo/mgit-python/main.py mgit
+
+    ls -la /opt/homebrew/lib/python3.11/site-packages
+    ln -s /opt/homebrew/lib/python3.11/site-packages/mgitpy/main.py mgit
+    chmod u+x mgit
+
 
 I assume that `~/bin` directory is included in your `PATH`.
 
