@@ -1,9 +1,7 @@
-import subprocess
 import yaml
-import pprint
 from jinja2 import Environment, BaseLoader
 import os
-import sys
+
 
 class ConfigProcessor(object):
 
@@ -77,4 +75,3 @@ class ConfigProcessor(object):
     def save_config_as_yaml(self, filename):
         with open(filename, "w") as text_file:
             text_file.write(self.get_config_yaml())
-

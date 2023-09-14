@@ -1,10 +1,8 @@
 import subprocess
-import yaml
 import pprint
-from jinja2 import Environment, BaseLoader
 import os
-import sys
 import ConfigProcessor
+
 
 class MultiGit(object):
     """
@@ -104,7 +102,7 @@ class MultiGit(object):
             ["git", "fetch"],
             ["git", "reset", "--hard"],
             ["git", "clean", "-df"],
-            ["git", "rebase",],
+            ["git", "rebase"],
         ], tag)
 
     def cleanup(self, tag: str = 'all'):
