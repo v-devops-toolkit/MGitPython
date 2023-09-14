@@ -8,22 +8,33 @@ then all you need to run is
 
     mgit checkout abc
 
-## Build
+## Build & Install
 
     rm -rf *
     git reset --hard
     python3 -m build
     pip3 install dist/MGitPython-0.8.0.tar.gz
 
-## Install
+## Install with git
 
 Clone the repo:
 
-    git clone git@github.com:gajdaw/mgit-python.git
+    git clone git@github.com:gajdaw/MGitPython.git
 
 Install dependencies:
 
+    cd mgitpy
     pip3 install -r requirements.txt
+
+Create symbolic link to `main.py` file:
+
+    cd ~/bin
+    ln -s /some/path/to/the/repo/mgitpy/main.py mgit
+    chmod u+x mgit
+
+## Install with pip
+
+TOBEDONE
 
 Create symbolic link to `main.py` file:
 
@@ -33,12 +44,10 @@ Create symbolic link to `main.py` file:
     ln -s /opt/homebrew/lib/python3.11/site-packages/mgitpy/main.py mgit
     chmod u+x mgit
 
-
-I assume that `~/bin` directory is included in your `PATH`.
-
 ## Configure
 
 Configuration is optional.
+
 `mgit` can work with multiple git repositories cloned to one directory without any configuration file.
 
 Remember, that without configuration file:
