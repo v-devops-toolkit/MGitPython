@@ -13,7 +13,7 @@ then all you need to run is
     rm -rf *
     git reset --hard
     python3 -m build
-    pip3 install dist/MGitPython-0.8.0.tar.gz
+    pip3 install dist/MGitPython-0.8.1.tar.gz
 
 ## Install with git
 
