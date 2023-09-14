@@ -40,7 +40,7 @@ class MultiGit(object):
         """
         version command
         """
-        print('mgit ver. 0.8.0')
+        print('mgit ver. 0.8.1')
 
     def status(self, params: str = '-sb', tag: str = 'all'):
         """

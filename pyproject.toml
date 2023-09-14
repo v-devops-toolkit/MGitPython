@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "MGitPython"
-version = "0.8.0"
+version = "0.8.1"
 authors = [
     {name = "Włodzimierz Gajda", email = "gajdaw@gajdaw.pl"},
 ]
@@ -23,3 +23,6 @@ license = {text = "MIT"}
 
 [project.scripts]
 cli-name = "mgitpy:main"
+
+[tool.setuptools]
+include-package-data = true
