@@ -1,111 +1,84 @@
 # MGitPython
 
-This script helps to run the same git commands
-in multiple repositories.
+CLI tool to work with multiple git repositories.
 
-For example, if you want to checkout `abc` branch in all the repos,
-then all you need to run is
+## 1. Install
 
-    mgit checkout abc
+Run:
 
-## Build & Install
-
-    rm -rf *
-    git reset --hard
-    python3 -m build
-    pip3 install dist/MGitPython-0.8.2.tar.gz
-
-## Install with git
-
-Clone the repo:
-
-    git clone git@github.com:gajdaw/MGitPython.git
-
-Install dependencies:
-
-    cd mgitpy
-    pip3 install -r requirements.txt
+```
+pip3 install MGitPython
+```
 
 Create symbolic link to `main.py` file:
 
-    cd ~/bin
-    ln -s /some/path/to/the/repo/mgitpy/main.py mgit
-    chmod u+x mgit
+```
+cd ~/bin
+ls -la /opt/homebrew/lib/python3.11/site-packages
+ln -s /opt/homebrew/lib/python3.11/site-packages/mgitpy/main.py mgit
+chmod u+x mgit
+```
 
-## Install with pip
+## 2. Quickstart
 
-TOBEDONE
+Create a temporary folder:
 
-Create symbolic link to `main.py` file:
+```
+mkdir work-with-mgit
+cd work-with-mgit
+```
 
-    cd ~/bin
+Clone two arbitrary repos, for example:
 
-    ls -la /opt/homebrew/lib/python3.11/site-packages
-    ln -s /opt/homebrew/lib/python3.11/site-packages/mgitpy/main.py mgit
-    chmod u+x mgit
+```
+git clone git@github.com:gajdaw/MGitPython.git
+git clone git@github.com:github/gitignore.git
+```
 
-## Configure
+Verify the repos:
 
-Configuration is optional.
+```
+mgit info
+```
 
-`mgit` can work with multiple git repositories cloned to one directory without any configuration file.
+Checkout a new branch named `lorem` in both repos:
 
-Remember, that without configuration file:
-- you cannot clone repos using `mgit` (you must clone repos with `git clone` commands)
-- you cannot use tags
+```
+mgit git "checkout -b lorem"
+```
 
-If you want to use configration file then
-create the file named `mgit.yaml` and fill it with information about
-repositories that you want to work with, for example:
+Verify the repos:
 
-    # mgit.yaml
-    dir: "../../tmp"
-    baseUrl: git@github.com:PragmaticGuideToTheCloud/{{name}}.git
+```
+mgit info
+```
 
-    repos:
+Switch to `main` branch in both repos:
 
-      - name: mgit
-        tags:
-          - product
+```
+mgit checkout main
+```
 
-      - name: gitignore
-        url: git@github.com:github/gitignore.git
-        tags:
-          - two
+Get some help:
 
-The file may be located anywhere on your filesystem.
+```
+mgit
+```
 
-The command `mgit` should be executed in the directory, where `mgit.yaml` file is located.
+## 3. Test & Build & Install & Upload
 
-Verify the configuration with:
+```
+# test
+pytest mgitpy-test/test*.py
 
-    mgit debug
+# build
+rm -rf *
+git reset --hard
+python3 -m build
 
-The command dumps the configuration to stdout.
+# install
+pip3 install dist/MGitPython-0.8.3.tar.gz
 
-## Commands
-
-Print help:
-
-    mgit
-
-Check configuration:
-
-    mgit debug
-
-Check status of all repositories:
-
-    mgit status
-
-Change branches in all repositories:
-
-    mgit checkout master
-
-Run generic git command or git alias in all repositories:
-
-    # l is an alias to git log --oneline
-    mgit git "l -1"
-
-## Unit tests
-
-    pytest mgitpy-test/test*.py
+# upload
+twine upload dist/MGitPython-0.8.3.tar.gz dist/MGitPython-0.8.3-py3-none-any.whl
+```
