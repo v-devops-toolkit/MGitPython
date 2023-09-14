@@ -77,8 +77,8 @@ git reset --hard
 python3 -m build
 
 # install
-pip3 install dist/MGitPython-0.8.2.tar.gz
+pip3 install dist/MGitPython-0.8.3.tar.gz
 
 # upload
-twine upload dist/MGitPython-0.8.2.tar.gz dist/MGitPython-0.8.2-py3-none-any.whl
+twine upload dist/MGitPython-0.8.3.tar.gz dist/MGitPython-0.8.3-py3-none-any.whl
 ```
