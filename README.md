@@ -1,4 +1,4 @@
-# mgit
+# MGitPython
 
 This script helps to run the same git commands
 in multiple repositories.
