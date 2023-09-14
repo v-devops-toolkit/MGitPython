@@ -1,5 +1,5 @@
 import pytest
-from ConfigProcessor import *
+from mgitpy import ConfigProcessor
 
 test_items = [
     [
@@ -41,7 +41,7 @@ def next_item(request):
     return request.param
 
 def test_process_raw_config_file(next_item):
-    cp = ConfigProcessor()
+    cp = ConfigProcessor.ConfigProcessor()
     cp.set_config(next_item[0])
     cp.process_raw_config_file()
     assert cp.get_config() == next_item[1]
