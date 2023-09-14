@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "MGitPython"
 version = "0.8.2"
 authors = [
-    {name = "Włodzimierz Gajda", email = "gajdaw@gajdaw.pl"},
+    { name = "Włodzimierz Gajda", email = "gajdaw@gajdaw.pl" },
 ]
 description = "CLI tool to work with multiple git repositories."
 readme = "README.md"
@@ -18,8 +18,14 @@ dependencies = [
     "pyyaml",
     "setuptools",
 ]
-keywords = ["one", "two"]
-license = {text = "MIT"}
+keywords = [
+    "cli",
+    "git",
+    "multiple",
+    "repo",
+]
+
+license = { text = "MIT" }
 
 [project.scripts]
 cli-name = "mgitpy:main"
